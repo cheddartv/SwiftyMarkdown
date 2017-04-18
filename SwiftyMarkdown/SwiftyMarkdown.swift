@@ -12,6 +12,7 @@ import UIKit
 public protocol FontProperties {
 	var fontName : String? { get set }
 	var color : UIColor { get set }
+    var style : UIFontTextStyle? { get set }
 }
 
 
@@ -23,6 +24,7 @@ If that is not set, then the system default will be used.
 public struct BasicStyles : FontProperties {
 	public var fontName : String? = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body).fontName
 	public var color = UIColor.black
+    public var style : UIFontTextStyle? = nil
 }
 
 enum LineType : Int {
@@ -326,42 +328,42 @@ open class SwiftyMarkdown {
 		case .h1:
 			fontName = h1.fontName
 			if #available(iOS 9, *) {
-				textStyle = UIFontTextStyle.title1
+				textStyle = h1.style ?? UIFontTextStyle.title1
 			} else {
-				textStyle = UIFontTextStyle.headline
+				textStyle = h1.style ?? UIFontTextStyle.headline
 			}
 			attributes[NSForegroundColorAttributeName] = h1.color
 		case .h2:
 			fontName = h2.fontName
 			if #available(iOS 9, *) {
-				textStyle = UIFontTextStyle.title2
+				textStyle = h2.style ?? UIFontTextStyle.title2
 			} else {
-				textStyle = UIFontTextStyle.headline
+				textStyle = h2.style ?? UIFontTextStyle.headline
 			}
 			attributes[NSForegroundColorAttributeName] = h2.color
 		case .h3:
 			fontName = h3.fontName
 			if #available(iOS 9, *) {
-				textStyle = UIFontTextStyle.title2
+				textStyle = h3.style ?? UIFontTextStyle.title2
 			} else {
-				textStyle = UIFontTextStyle.subheadline
+				textStyle = h3.style ?? UIFontTextStyle.subheadline
 			}
 			attributes[NSForegroundColorAttributeName] = h3.color
 		case .h4:
 			fontName = h4.fontName
-			textStyle = UIFontTextStyle.headline
+			textStyle = h4.style ?? UIFontTextStyle.headline
 			attributes[NSForegroundColorAttributeName] = h4.color
 		case .h5:
 			fontName = h5.fontName
-			textStyle = UIFontTextStyle.subheadline
+			textStyle = h5.style ?? UIFontTextStyle.subheadline
 			attributes[NSForegroundColorAttributeName] = h5.color
 		case .h6:
 			fontName = h6.fontName
-			textStyle = UIFontTextStyle.footnote
+			textStyle = h6.style ?? UIFontTextStyle.footnote
 			attributes[NSForegroundColorAttributeName] = h6.color
 		default:
 			fontName = body.fontName
-			textStyle = UIFontTextStyle.body
+			textStyle = body.style ?? UIFontTextStyle.body
 			attributes[NSForegroundColorAttributeName] = body.color
 			break
 		}
